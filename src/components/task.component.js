@@ -46,7 +46,7 @@ export default class Task extends Component {
         }>
           {this.state.description}
         </Col>
-        <Col className="attachment" sm={2}>
+        <Col className="attachment" xs={2}>
           {
             attachmentUrl
             ? <a rel="noopener noreferrer" target="_blank" href={attachmentUrl} style={{ color : 'gray' }}>(File attached)</a>

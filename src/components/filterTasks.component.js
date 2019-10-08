@@ -78,7 +78,7 @@ export default class TodoList extends Component {
     return(
       <Form onSubmit={this.onSubmit}>
         <Row className="mb-4">
-          <Col sm={10}>
+          <Col xs={8}>
             <InputGroup>
               <Input type="text"
               name="descriptionFilter"
@@ -104,7 +104,7 @@ export default class TodoList extends Component {
               </InputGroupButtonDropdown>
             </InputGroup>
           </Col>
-          <Col sm={2}>
+          <Col xs={4}>
             <Button outline block color="secondary">Apply filter</Button>
           </Col>
         </Row>
