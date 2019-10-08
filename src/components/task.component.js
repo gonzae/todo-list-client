@@ -1,7 +1,7 @@
 import './todoList.component.css';
 
 import React, { Component } from 'react';
-import { ListGroupItem, Row, Col, UncontrolledTooltip } from 'reactstrap';
+import { ListGroupItem, Row, Col } from 'reactstrap';
 import { faCircle, faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -33,7 +33,7 @@ export default class Task extends Component {
       <Row>
         <Col xs={1}>
         {taskIsComplete ? (
-            <FontAwesomeIcon icon={faCheckCircle} size="lg" id="completeTask" style={{ color : '00b200' }} />
+            <FontAwesomeIcon icon={faCheckCircle} size="lg" style={{ color : '00b200' }} />
           ) : (
             <FontAwesomeIcon onClick={this.handleCheckboxChange} icon={faCircle} size="lg" style={{ cursor: 'pointer', color : 'gray' }} />
           )
@@ -54,9 +54,6 @@ export default class Task extends Component {
           }
         </Col>
       </Row>
-      <UncontrolledTooltip placement="top" target="completeTask">
-        A complete task cannot be undone.
-      </UncontrolledTooltip>
       </ListGroupItem>
     );
   }
