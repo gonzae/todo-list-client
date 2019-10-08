@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Form, FormGroup, Col, Label, Input } from 'reactstrap';
 import axios from 'axios';
 
 export default class CreateTask extends Component {
@@ -43,7 +44,6 @@ export default class CreateTask extends Component {
     }
 
     const res = await axios.post('http://localhost:9000/api/todos/', task);
-    console.log(res.data);
     task.id = res.data.id;
     task.done = 0;
 
@@ -56,18 +56,21 @@ export default class CreateTask extends Component {
 
   render() {
     return(
-      <div>
-        <h1>Create a new task:</h1>
-        <input type="file" name="file" onChange={this.onChangeFile}/>
-        <form onSubmit={this.onSubmit}>
-          <input type="text"
-            required
-            value={this.state.description}
-            onChange={this.onChangeDescription}
-            />
-          <input type="submit" value="submit" />
-        </form>
-      </div>
+      <Form onSubmit={this.onSubmit}>
+        <FormGroup row>
+          <Col>
+            <Input type="text" name="newTask" id="newTask" placeholder="Write a new task and press 'Enter' key..."
+              required
+              value={this.state.description}
+              onChange={this.onChangeDescription}
+              />
+          </Col>
+        </FormGroup>
+        <FormGroup>
+          <Label for="uploadAttachment">Attach file before saving the task:</Label>
+          <Input type="file" name="file" id="uploadAttachment" onChange={this.onChangeFile}/>
+        </FormGroup>
+      </Form>
     );
   }
 };

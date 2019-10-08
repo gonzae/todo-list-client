@@ -1,46 +1,58 @@
+import './task-list.component.css';
 import _ from 'underscore';
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Container, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
+import { faCircle, faCheckCircle } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import CreateTask from './create-task.component';
-
-// const Task = props => (
-//   <li>
-//     <div>
-//       <div>{props.task.description}</div>
-//       <div>{props.task.done === 1 ? 'DONE' : <a href="#" onClick={() => { props.completeTask(props.task.id) }}>Complete!</a> }</div>
-//       <div>{props.task.attachment ? <a href="http://localhost:9000/${ props.task.attachment }">attachment</a> : '' }</div>
-//     </div>
-//   </li>
-// )
 
 class Task extends Component {
   constructor(props) {
     super(props);
+
+    this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
 
     this.state = {
       task: props.task
     };
   }
 
+  handleCheckboxChange(task) {
+    if( this.state.task.done !== 1 ) this.props.completeTask(this.state.task.id);
+  }
+
   render() {
     const attachmentUrl = this.state.task.attachment ? `http://localhost:9000/${this.state.task.attachment}` : null;
+    const done = this.state.task.done === 1;
     return(
-      <li>
-        <div>
+      <ListGroupItem>
+      <Row>
+        <Col xs={1}>
+        {done ? (
+            <FontAwesomeIcon icon={faCheckCircle} size="lg" id="doneTask" style={{ color : '00b200' }} />
+          ) : (
+            <FontAwesomeIcon onClick={this.handleCheckboxChange} icon={faCircle} size="lg" id="pendingTask" style={{ cursor: 'pointer', color : 'gray' }} />
+          )
+        }
+        </Col>
+        <Col className="description" xs={9} style={
+          done
+          ? { 'text-decoration' : 'line-through' }
+          : {}
+        }>
           {this.state.task.description}
-          {
-            this.state.task.done === 1
-            ? 'DONE'
-            : <a href="#" onClick={() => { this.props.completeTask(this.state.task.id) }}>Complete!</a>
-          }
+        </Col>
+        <Col className="attachment" sm={2}>
           {
             attachmentUrl
-            ? <a rel="noopener noreferrer" target="_blank" href={attachmentUrl}>attachment</a>
+            ? <a rel="noopener noreferrer" target="_blank" href={attachmentUrl} style={{ color : 'gray' }}>(File attached)</a>
             : ''
           }
-        </div>
-      </li>
+        </Col>
+      </Row>
+      </ListGroupItem>
     );
   }
 }
@@ -90,17 +102,25 @@ export default class TaskList extends Component {
 
   render() {
     return(
-      <div>
-        <CreateTask taskAdded={this.handleAddingTask} />
-        <h1>All tasks:</h1>
-        <ul>
-          {
-            this.state.tasks.map((thisTask) => {
-              return <Task task={thisTask} completeTask={this.completeTask} key={thisTask.id}/>
-            })
-          }
-        </ul>
-      </div>
+      <Container>
+        <h1 className="mt-4">My ToDos</h1>
+        <Row className="mb-4">
+          <Col>
+            <ListGroup>
+              {
+                this.state.tasks.map((thisTask) => {
+                  return <Task task={thisTask} completeTask={this.completeTask} key={thisTask.id}/>
+                })
+              }
+            </ListGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <CreateTask taskAdded={this.handleAddingTask} />
+          </Col>
+        </Row>
+      </Container>
     );
   }
 };
