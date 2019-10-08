@@ -1,6 +1,6 @@
 # ToDo List client
 
-A client-side piece for for running my ToDo list project.
+A client-side piece for for running my ToDo list project. Server side piece here: https://github.com/gonzae/todo-list-backend
 This is my very first project using [ReactJS](https://reactjs.org/).
 I've been investigating also how to make it look nice, and I got into some nice packages like [Reactstrap](https://reactstrap.github.io) to help me build some cool stuff.
 
